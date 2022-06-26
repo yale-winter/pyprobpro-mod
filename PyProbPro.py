@@ -29,11 +29,9 @@ Run the script to test your Problem Solving and try to get a better time
 
 >> See the example .csv file (Problems.csv) attached in this repository
 
->> Run in Jupyter Notebook etc parallel alongside another or an IDE etc to solve the problem
+>> Run in Jupyter Notebook etc parallel alongside another or an IDE used to solve the problem
 
-Use the command done() to see how your time compared to your best
-
-*** or enable read/write file to manually call problems ***
+>> Use the command done() to see how your time compared to your best
 
 """
 import pandas as pd
