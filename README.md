@@ -19,4 +19,3 @@ And name the document 'Problems.csv' and place in the same folder<br/><br/>
 **How to Use:**
 - Run in Jupyter Notebook etc parallel alongside another or an IDE used to solve the problem
 - Use the command done() to see how your time compared to your best
-- See the example .csv file (Problems.csv) attached in this repository
