@@ -1,5 +1,3 @@
-# PyProbPro
-PyProbPro - Python Problem Provider
 - - - - - - - - - - - - - - - - - - - - - - - - -
 **PyProbPro: Python Problem Provider**
 - - - - - - - - - - - - - - - - - - - - - - - - -
