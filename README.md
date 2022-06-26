@@ -1,9 +1,7 @@
 # PyProbPro
 PyProbPro - Python Problem Provider
-
-![PyToDoT](https://user-images.githubusercontent.com/5803874/175763591-e8261c2d-d28c-4527-a3d6-aa3672ad4171.jpg)
 - - - - - - - - - - - - - - - - - - - - - - - - -
-**PyToDoT: Python To-Do Tracker**
+**PyProbPro: Python Problem Provider**
 - - - - - - - - - - - - - - - - - - - - - - - - -
 Create a google sheet online or use with .csv offline with the following schema:
 
