@@ -11,6 +11,8 @@ PyProbPro - Python Problem Provider
 
 - - - - - - - - - - - - - - - - - - - - - - - - -
 
+Test your Problem Solving and try to get a better time
+
 Create a google sheet online or use with .csv offline 
 The document needs the following schema:
 
@@ -25,13 +27,10 @@ Change import_online to True, and replace ___online_url___ with that part of you
 To load your offline .csv:
 Download your Problems as .csv (only downloading selected collumns and rows)
 And name the document 'Problems.csv' and place in the same folder
-Run the script to test your Problem Solving and try to get a better time
 
->> See the example .csv file (Problems.csv) attached in this repository
-
->> Run in Jupyter Notebook etc parallel alongside another or an IDE used to solve the problem
-
->> Use the command done() to see how your time compared to your best
+- Run in Jupyter Notebook and execute this program and your answer in seperate code block
+- Or if using an IDE run this program parallel (as opposed to on the same script as your answer)
+- Use the command done() to see how your time compared to your best
 
 """
 import pandas as pd
