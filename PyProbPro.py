@@ -28,8 +28,8 @@ To load your offline .csv:
 Download your Problems as .csv (only downloading selected collumns and rows)
 And name the document 'Problems.csv' and place in the same folder
 
-- Run in Jupyter Notebook and execute this program and your answer in seperate code block
-- Or if using an IDE run this program parallel (as opposed to on the same script as your answer)
+- Run in Jupyter Notebook and execute this program and your answer in seperate code blocks
+- Or if using an IDE like Spyder run this program parallel (as opposed to on the same script as your answer)
 - Use the command done() to see how your time compared to your best
 
 """
