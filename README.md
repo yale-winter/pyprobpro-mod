@@ -10,7 +10,7 @@ Create a google sheet online or use with .csv offline with the following schema:
 | Problem 1 | Test case 1 | 20 |
 | Problem 2 | Test case 2 | 15 | 
 
-Run the script to test your Problem Solving and try to get a better time,
+Run the script to test your Problem Solving and try to get a better time.
 Saves receipts of your times and questions asked.
 
 **To load your live google sheet online:**<br/>
