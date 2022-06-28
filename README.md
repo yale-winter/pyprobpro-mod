@@ -17,6 +17,10 @@ Change import_online to True, and replace ___online_url___ with that part of you
 Download your Problems as .csv (only downloading selected collumns and rows)<br/>
 and name the document 'Problems.csv' and place in the same folder.<br/><br/>
 **How to Use:**
-- Run in Jupyter Notebook and execute this program and your answer in seperate code block
-- Or if using an IDE run this program parallel (as opposed to on the same script as your answer)
+- Run in Jupyter Notebook and execute this program and your answer in seperate code blocks
+- Or if using an IDE like Spyder run this program parallel (as opposed to on the same script as your answer)
 - Use the command done() to see how your time compared to your best
+
+Adding soon:
+read/write problems to files in folder, to be fully functional in one code block with the answer and receipts of
+complete problems with times
