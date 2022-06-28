@@ -20,3 +20,7 @@ and name the document 'Problems.csv' and place in the same folder.<br/><br/>
 - Run in Jupyter Notebook and execute this program and your answer in seperate code blocks
 - Or if using an IDE like Spyder run this program parallel (as opposed to on the same script as your answer)
 - Use the command done() to see how your time compared to your best
+
+Adding soon:
+read/write problems to files in folder, to be fully functional in one code block with the answer and receipts of
+complete problems with times
