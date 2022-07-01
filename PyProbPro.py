@@ -22,7 +22,7 @@ etc ...
 Run the script to test your Problem Solving and try to get a better time,
 Saves receipts of your times and questions asked.
 
-To load your live google sheet online:
+To load your live google sheet online (set so anyone with the link can view):
 Change import_online to True, and replace ___online_url___ with that part of your url
 
 To load your offline .csv:
@@ -112,36 +112,55 @@ def provide_problem(df, x):
     return prob_choice
     
     
-def import_problems(file_name, online, read_rows):
+def import_data_table(file_name, online, gsheet_mid_link, read_rows, col_names):
     '''
-    Import problem solving questions from .csv file
-    '''
-    loaded = False
-    try:
-        if online:
-            df = pd.read_csv('https://docs.google.com/spreadsheets/d/' + 
-                               '___online_url___' +
-                               '/export?gid=0&format=csv',
-                              )
-        else:
-            # file path (same directory as this file)
-            __location__ = os.path.realpath(
-                os.path.join(os.getcwd(), os.path.dirname(__file__)))
-            sheet_url = os.path.join(__location__, file_name)
-            df = pd.read_csv(sheet_url, nrows=read_rows, on_bad_lines='skip')
-            df.dropna(how='all')
-        df = pd.DataFrame(df, columns=['Problem Description', 'Test Cases', 'Time'])
-    except:
-        print('initial problem reading data')
-    finally:
-        loaded = True
-    return df, loaded
-
-
-def set_up(import_online):
+    Import timeline from .csv file
     
-    df, loaded = import_problems('Problems.csv', import_online, 1000)
-    return df, loaded
+    Parameters
+    ----------
+    file_name : string
+        File name including file extension
+    online : bool
+        Read online or local
+    read_rows : number
+        number of rows to read
+    col_names : array of strings
+        names of columns
+
+    Returns
+    -------
+    DataFrame of the content or error string
+
+    '''
+    df = 'error importing data'
+    if online:
+        try:
+            df = pd.read_csv('https://docs.google.com/spreadsheets/d/' + 
+            gsheet_mid_link +
+            '/export?gid=0&format=csv',nrows=read_rows, on_bad_lines='skip')
+            print('loaded table data from google sheet online')
+        except:
+            print('error loading table data from google sheet online')
+            online = False
+            
+    if online == False:
+        try:
+            df = pd.read_csv(file_name,nrows=read_rows, on_bad_lines='skip')
+            print('loaded table data from local .csv')
+        except:
+            print('error loading data from local .csv')
+    
+    # drop rows where at least 1 element is missing
+    if type(df) == pd.DataFrame:
+        df.dropna()
+
+    return df
+
+
+def set_up(import_online,gsheet_mid_link):
+    col_names = ['Problem Description', 'Test Cases', 'Time']
+    df = import_data_table('Problems.csv', import_online, gsheet_mid_link, 1000, col_names)
+    return df
 
 
 def start():
@@ -152,7 +171,7 @@ def start():
     global prob_choice
     global loaded
     global df
-    if loaded:
+    if type(df) == pd.DataFrame:
         startT = time.time()
         prob_choice = provide_problem(df, -1)
 
@@ -165,16 +184,17 @@ def problem(x):
     global prob_choice
     global loaded
     global df
-    if loaded:
+    if type(df) == pd.DataFrame:
         startT = time.time()
         prob_choice = provide_problem(df, x)
 
 
 import_online = False
+gsheet_mid_link = 'your_url_here'
 startT = 0
 prob_choice = -1
-df, loaded = set_up(import_online)
-if loaded:
+df = set_up(import_online,gsheet_mid_link)
+if type(df) == pd.DataFrame:
     print('PyProbPro successfully loaded - Use start() or problem(x) for a new problem')
 else:
     print('Problem loading problems')

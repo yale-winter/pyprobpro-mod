@@ -11,7 +11,7 @@ Create a google sheet online or use with .csv offline with the following schema:
 | Problem 2 | Test case 2 | 15 | 
 
 
-**To load your live google sheet online:**<br/>
+**To load your live google sheet online (set so anyone with the link can view):**<br/>
 Change import_online to True, and replace ___online_url___ with that part of your url.<br/><br/>
 **To load your offline .csv:**<br/>
 Download your Problems as .csv (only downloading selected collumns and rows)<br/>
