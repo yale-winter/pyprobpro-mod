@@ -53,22 +53,18 @@ def done():
     with open(latest_file, "r") as file1:
         fileList = file1.readlines()
         
-    if len(fileList) == 6:
-        
-        last_time = int(fileList[5])
-        end_time = int(((time.time() - float(fileList[1]))/60))
-        print('minutes taken', end_time)
+    last_time = int(fileList[-1])
+    end_time = int(((time.time() - float(fileList[1]))/60))
+    print('minutes taken', end_time)
     
-        result_string = ''
-        if end_time < last_time:
-            result_string = 'New fastest time: ' + str(end_time) + ' minutes. Congratulations, this was ' + str(last_time - end_time) + ' minutes faster'
-        else: 
-            result_string = 'New time: ' + str(end_time) + ' minutes. This was ' + str(end_time - last_time) + ' minutes slower than your best'
-        print(result_string)
-        with open(latest_file, "a") as file1:
-            file1.write(result_string +'\n')
-    else:
-        print('most recent problem already marked complete')
+    result_string = ''
+    if end_time < last_time:
+        result_string = 'New fastest time: ' + str(end_time) + ' minutes. Congratulations, this was ' + str(last_time - end_time) + ' minutes faster'
+    else: 
+        result_string = 'New time: ' + str(end_time) + ' minutes. This was ' + str(end_time - last_time) + ' minutes slower than your best'
+    print(result_string)
+    with open(latest_file, "a") as file1:
+        file1.write(str(end_time) +'\n')
 
 
 def provide_problem(df, x):
