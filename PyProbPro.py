@@ -64,10 +64,12 @@ def done():
         result_string = 'New time: ' + str(end_time) + ' minutes. This was ' + str(end_time - last_time) + ' minutes slower than your best'
     print(result_string)
     with open(latest_file, "a") as file1:
+        file1.write(result_string +'\n')
         file1.write(str(end_time) +'\n')
 
 
-def provide_problem(df, x):
+
+def provide_problem(df, x, hard=False):
     '''
     displays the problem information
     '''
@@ -79,17 +81,26 @@ def provide_problem(df, x):
     if x -1 >= 0 and x -1 <= len(df) -1:
         prob_choice = x - 1
     
+    the_mean = df['Time'].mean()
+    speed_desc = ''
+    if hard == True:
+        while int(df.loc[prob_choice]['Time']) < the_mean:
+            prob_choice = rnd.randint(0,len(df)-1)
     try:
-        print('Problem', prob_choice+1)
+        
+        print('\nProblem', prob_choice+1)
         print('\n- - - - - - - - - - - - - - - - - -\n')
         print(df.loc[prob_choice]['Problem Description'])
-        print('\n')
-        print(df.loc[prob_choice]['Test Cases'])
-        print("\nRun done() when finished to compare times")
+        print('\n',df.loc[prob_choice]['Test Cases'])
+        speed_desc = '\nBest time for this problem: ' + str(df.loc[prob_choice]['Time']) + ' min\n\nAverage time for all problems: ' + str(the_mean) +' min\n'
+        print(speed_desc)
+        print("Run done() when finished to compare times")
+        print('\nDate stamp', datetime.now())
+        print('\n- - - - - - - - - - - - - - - - - -\n')
     except:
-        print('problem reading problem data')
+        print('Problem reading problem data')
+        return 'none'
         
-    print('date time', datetime.now())
     # Write line to file
     fName = str(datetime.now()) + '-Problem-' + str(prob_choice + 1) 
     fName = fName.replace('.', '_')
@@ -103,6 +114,7 @@ def provide_problem(df, x):
         writefile.write(str(datetime.now()) + '\n')
         writefile.write(str(df.loc[prob_choice]['Problem Description']) + '\n')
         writefile.write(str(df.loc[prob_choice]['Test Cases']) + '\n')
+        writefile.write(speed_desc)
         writefile.write(str(df.loc[prob_choice]['Time']) + '\n')
 
     return prob_choice
@@ -158,8 +170,10 @@ def set_up(import_online,gsheet_mid_link):
     df = import_data_table('Problems.csv', import_online, gsheet_mid_link, 1000, col_names)
     return df
 
+def hard():
+    start(True)
 
-def start():
+def start(hard= False):
     '''
     Use this function in console to start problem solving
     '''
@@ -169,7 +183,7 @@ def start():
     global df
     if type(df) == pd.DataFrame:
         startT = time.time()
-        prob_choice = provide_problem(df, -1)
+        prob_choice = provide_problem(df, -1, hard)
 
 
 def problem(x):
@@ -184,16 +198,25 @@ def problem(x):
         startT = time.time()
         prob_choice = provide_problem(df, x)
 
+def show():
+    list_of_files = glob.glob('*.txt')
+    latest_file = max(list_of_files, key=os.path.getctime)
+    
+    with open(latest_file, "r") as file1:
+        fileList = file1.readlines()
+        for i in range(len(fileList)):
+            print(fileList[i])
 
 import_online = False
-gsheet_mid_link = 'your_url_here'
+gsheet_mid_link = '__your_url_here__';
 startT = 0
 prob_choice = -1
 df = set_up(import_online,gsheet_mid_link)
 if type(df) == pd.DataFrame:
-    print('PyProbPro successfully loaded - Use start() or problem(x) for a new problem')
+    print('PyProbPro successfully loaded - Use start(), hard(), or problem(x) for a new problem')
 else:
     print('Problem loading problems')
+    
 
 
 
