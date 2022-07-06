@@ -20,10 +20,8 @@ Data:             Problem 2       x = "bob"         15
 etc ...
 
 Run the script to test your Problem Solving and try to get a better time,
-Saves receipts of your times and questions asked.
-
-To load your live google sheet online (set so anyone with the link can view):
-Change import_online to True, and replace ___online_url___ with that part of your url
+Saves receipts of your times and questions asked. Displays your top slowest
+problems and gives options to randomly or purposefully choose them.
 
 To load your offline .csv:
 Download your Problems as .csv (only downloading selected collumns and rows)
@@ -31,8 +29,10 @@ And name the document 'Problems.csv' and place in the same folder
 
 See the example .csv file (Problems.csv) attached in this repository
 
->>> Use function start() to start OR use problem(x) where x is the problem you want
->>> Use function done() when done
+> To Start: Use start() to pick randomly from all,
+> hard() to randomly choose from problems that are above median time
+> Or use problem(x) where x is the problem you want
+> Use done() when done or show() to show the problem again
 
 """
 import pandas as pd
@@ -68,7 +68,6 @@ def done():
         file1.write(str(end_time) +'\n')
 
 
-
 def provide_problem(df, x, hard=False):
     '''
     displays the problem information
@@ -77,24 +76,25 @@ def provide_problem(df, x, hard=False):
     global startT
     prob_choice = rnd.randint(0,len(df)-1)
     
-    # if using problem(x) set problem manually
-    if x -1 >= 0 and x -1 <= len(df) -1:
-        prob_choice = x - 1
-    
     the_mean = df['Time'].mean()
     speed_desc = ''
     if hard == True:
         while int(df.loc[prob_choice]['Time']) < the_mean:
             prob_choice = rnd.randint(0,len(df)-1)
+
+    # if using problem(x) set problem manually
+    if x -1 >= 0 and x -1 <= len(df) -1:
+        prob_choice = x - 1
+        
     try:
         
         print('\nProblem', prob_choice+1)
         print('\n- - - - - - - - - - - - - - - - - -\n')
         print(df.loc[prob_choice]['Problem Description'])
         print('\n',df.loc[prob_choice]['Test Cases'])
-        speed_desc = '\nBest time for this problem: ' + str(df.loc[prob_choice]['Time']) + ' min\n\nAverage time for all problems: ' + str(the_mean) +' min\n'
+        speed_desc = '\nBest time for this problem: ' + str(df.loc[prob_choice]['Time']) + ' min\n\nAverage best time for all problems: ' + str(the_mean) +' min\n'
         print(speed_desc)
-        print("Run done() when finished to compare times")
+        print("Run done() when finished to compare times, Show() to show problem again")
         print('\nDate stamp', datetime.now())
         print('\n- - - - - - - - - - - - - - - - - -\n')
     except:
@@ -120,54 +120,29 @@ def provide_problem(df, x, hard=False):
     return prob_choice
     
     
-def import_data_table(file_name, online, gsheet_mid_link, read_rows, col_names):
+def import_data_table(file_name, read_rows, col_names):
     '''
     Import timeline from .csv file
-    
-    Parameters
-    ----------
-    file_name : string
-        File name including file extension
-    online : bool
-        Read online or local
-    read_rows : number
-        number of rows to read
-    col_names : array of strings
-        names of columns
-
-    Returns
-    -------
-    DataFrame of the content or error string
 
     '''
-    df = 'error importing data'
-    if online:
-        try:
-            df = pd.read_csv('https://docs.google.com/spreadsheets/d/' + 
-            gsheet_mid_link +
-            '/export?gid=0&format=csv',nrows=read_rows, on_bad_lines='skip')
-            print('loaded table data from google sheet online')
-        except:
-            print('error loading table data from google sheet online')
-            online = False
-            
-    if online == False:
-        try:
-            df = pd.read_csv(file_name,nrows=read_rows, on_bad_lines='skip')
-            print('loaded table data from local .csv')
-        except:
-            print('error loading data from local .csv')
-    
-    # drop rows where at least 1 element is missing
-    if type(df) == pd.DataFrame:
+    try:
+        print('* * * * * * * * * * Python Problem Provider * * * * * * * * * *\n')
+        df = pd.read_csv(file_name,nrows=read_rows, on_bad_lines='skip')
         df.dropna()
+       
+        df2 = df.sort_values(by=['Time', 'Problem Description'], ascending = False)
+        df2 = df2.loc[df2['Time'] > 0, ['Problem Description', 'Time']]
+        print(df2.head())
+        print('\nloaded table data from local .csv')
+    except:
+        print('error loading data from local .csv')
 
     return df
 
 
-def set_up(import_online,gsheet_mid_link):
+def set_up():
     col_names = ['Problem Description', 'Test Cases', 'Time']
-    df = import_data_table('Problems.csv', import_online, gsheet_mid_link, 1000, col_names)
+    df = import_data_table('Problems.csv', 1000, col_names)
     return df
 
 def hard():
@@ -206,16 +181,15 @@ def show():
         fileList = file1.readlines()
         for i in range(len(fileList)):
             print(fileList[i])
+            
 
-import_online = False
-gsheet_mid_link = '__your_url_here__';
 startT = 0
 prob_choice = -1
-df = set_up(import_online,gsheet_mid_link)
+df = set_up()
 if type(df) == pd.DataFrame:
     print('PyProbPro successfully loaded - Use start(), hard(), or problem(x) for a new problem')
 else:
-    print('Problem loading problems')
+    print('error loading problems')
     
 
 
