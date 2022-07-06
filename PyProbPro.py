@@ -33,7 +33,7 @@ See the example .csv file (Problems.csv) attached in this repository
 > hard() to randomly choose from problems that are above median time
 > Or use problem(x) where x is the problem you want
 > Use done() when done or show() to show the problem again
-> Look at saved .txt recipts for a seperate record 
+> Look at saved .txt receipts for a seperate record 
 
 """
 import pandas as pd
