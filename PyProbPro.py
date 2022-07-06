@@ -32,6 +32,7 @@ See the example .csv file (Problems.csv) attached in this repository
 > To Start: Use start() to pick randomly from all,
 > hard() to randomly choose from problems that are above median time
 > Or use problem(x) where x is the problem you want
+> Use details() to see problem set details, and stats
 > Use done() when done or show() to show the problem again
 > Look at saved .txt receipts for a seperate record 
 
@@ -127,19 +128,21 @@ def import_data_table(file_name, read_rows, col_names):
 
     '''
     try:
-        print('* * * * * * * * * * Python Problem Provider * * * * * * *\n')
+        print('  *        *    *  *** PyProbPro ***  *    *        *      ')
+        print('* * * * * * * * * Python Problem Provider * * * * * * * * *')
         df = pd.read_csv(file_name,nrows=read_rows, on_bad_lines='skip')
         df.dropna()
-       
-        df2 = df.sort_values(by=['Time', 'Problem Description'], ascending = False)
-        df2 = df2.loc[df2['Time'] > 0, ['Problem Description', 'Time']]
-        print(df2.head())
-        print('\nloaded table data from local .csv')
     except:
         print('error loading data from local .csv')
 
     return df
 
+def details():
+    print('* * * * * * * * * Problem Set Details * * * * * * * * * * *\n')
+    df2 = df.sort_values(by=['Time', 'Problem Description'], ascending = False)
+    df2 = df2.loc[df2['Time'] > 0, ['Problem Description', 'Time']]
+    print(df2)
+    print('\nAverage best time:', int(100*sum(df2['Time'])/len(df2['Time']))/100,'min','\nTotal time:', sum(df2['Time']),'min','\nProblems:', len(df2['Time']))
 
 def set_up():
     col_names = ['Problem Description', 'Test Cases', 'Time']
@@ -188,9 +191,9 @@ startT = 0
 prob_choice = -1
 df = set_up()
 if type(df) == pd.DataFrame:
-    print('PyProbPro successfully loaded - Use start(), hard(), or problem(x) for a new problem')
-else:
-    print('error loading problems')
+    print('PyProbPro successfully loaded - Use start(), hard(), or problem(x) for a new problem.')
+    print('Or details() to show problem set and best average time.')
+
     
 
 
