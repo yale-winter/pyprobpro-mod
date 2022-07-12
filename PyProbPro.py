@@ -85,8 +85,8 @@ def provide_problem(df, x, hard=False):
             prob_choice = rnd.randint(0,len(df)-1)
 
     # if using problem(x) set problem manually
-    if x -1 >= 0 and x -1 <= len(df) -1:
-        prob_choice = x - 1
+    if prob_choice != -1:
+        prob_choice = x -1
         
     try:
         
