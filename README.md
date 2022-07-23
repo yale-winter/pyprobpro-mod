@@ -1,3 +1,5 @@
+This is now outdated and replaced by [pyprobpro - package here](https://github.com/yale-winter/pyprobpro)
+
 - - - - - - - - - - - - - - - - - - - - - - - - -
 **PyProbPro: Python Problem Provider**
 - - - - - - - - - - - - - - - - - - - - - - - - -
